@@ -68,15 +68,20 @@ int KMP(char *S, char *T) {
     int i = 1;
     int j = 1;
     while ( i <= strlen(S) && j <= strlen(T)) {
-
+        // j == 0 代表模式串的第一个字符就和当前测试的字符不相等
+        // S[i - 1] == T[j - 1]对应位置字符相等
+        // 这两种情况下，指向当前测试的两个指针下标i和j都要向后移
         if ( j == 0 || S[i - 1] == T[j - 1]) {
             i++;
             j++;
         } else {
+            // 如果测试的两个字符都不相等
+            // i不动，j变为指向模式串的next[j]位置
             j = next[j];
         }
     }
 
+    // 如果条件为真，说明匹配成功
     if ( j > strlen(T) ) {
         return i - strlen(T);
     }
